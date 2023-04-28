@@ -1,0 +1,12 @@
+{
+  "name": "ev-map",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "packages/front-end",
+    "packages/server"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
