@@ -1,0 +1,19 @@
+import http from 'http';
+import constants from './constants';
+import { createHandler } from 'graphql-http/lib/use/http';
+import schema from './schema';
+
+const { PORT } = constants;
+const handler = createHandler({ schema });
+
+const server = http.createServer((req, res) => {
+    if (req && req.url?.startsWith('/graphql')) {
+        handler(req, res);
+      } else {
+        res.writeHead(404).end();
+      }
+});
+
+server.listen(PORT, () => {
+    console.log(`server is up at ${PORT}`);
+});
