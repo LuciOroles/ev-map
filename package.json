@@ -4,7 +4,7 @@
   "description": "",
   "workspaces": [
     "packages/front-end",
-    "packages/server"
+    "packages/ev-server"
   ],
   "keywords": [],
   "author": "",

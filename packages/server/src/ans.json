@@ -1,0 +1,20 @@
+{
+    "ans":  [
+        {
+            "code": 1,
+            "label": "Don’t dare to interrupt them"
+        },
+        {
+            "code": 2,
+            "label": "Think it’s more important to give them some of your time; work can wait"
+        },
+        {
+            "code": 3,
+            "label": "Listen, but with only with half an ear"
+        },
+        {
+            "code": 4,
+            "label": "Interrupt and explain that you are really busy at the moment"
+        }
+    ]
+}
