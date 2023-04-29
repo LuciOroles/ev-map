@@ -13,6 +13,7 @@ export const Company = sequelize.define('Company', {
         type: DataTypes.CHAR(100),
         allowNull: false,
     },
+    // TODO: magic strings
     parent_company_id: {
         type: DataTypes.UUID,
     },

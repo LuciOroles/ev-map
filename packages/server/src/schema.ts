@@ -1,10 +1,33 @@
 import {
   GraphQLSchema, GraphQLList,
   GraphQLOutputType,
+  GraphQLID,
   GraphQLNonNull, GraphQLInt, GraphQLObjectType, GraphQLString
 } from 'graphql';
 import answers from './ans.json';
 import categories from './category.json'
+import CompanyController  from './db/controllers';
+
+
+const { getAllCompanies } = CompanyController;
+
+
+const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
+  name: "Company",
+  description: "EV organization",
+  fields: () => ({
+    id: {
+      type: GraphQLID,
+    },
+    name: {
+      type: GraphQLString,
+    },
+    parent: {
+      type: CompanyType
+    }
+  }),
+});
+
 
 var CategoryType: GraphQLOutputType = new GraphQLObjectType({
   name: "category",
@@ -56,6 +79,17 @@ const RootAnsType = new GraphQLObjectType({
   name: 'anwserList',
   description: 'list of answers',
   fields: {
+    companies: {
+      type: new GraphQLList(CompanyType),
+      resolve:async ( ) => {
+        try {
+          return (await getAllCompanies());
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      }
+    },
     answer: {
       type: AnswerType,
       description: 'one answer',
@@ -65,7 +99,7 @@ const RootAnsType = new GraphQLObjectType({
         }
       },
       resolve: (parent, args) => {
-        return answers.ans.find((el)=>  el.code === args.id)
+        return answers.ans.find((el) => el.code === args.id)
       }
     },
     answers: {

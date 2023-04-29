@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import path from "path";
+export *  from "./controllers";
 
 export function createDbInstance() {
     const sequelize = new Sequelize({
@@ -22,3 +23,6 @@ export const getDbInstance = (() => {
         }
     }
 })();
+
+
+ 

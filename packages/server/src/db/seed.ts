@@ -15,9 +15,17 @@ export  async function seedDb() {
 
     const companyB = Company.build({
         id: randomUUID(),
-        name: "Co A",
+        name: "Co BB",
+        parent_company_id: companyA.get('id')
+    });
+
+    const companyC = Company.build({
+        id: randomUUID(),
+        name: "Co CC",
         parent_company_id: companyA.get('id')
     });
 
     await companyB.save();
+
+    await companyC.save();
 }
