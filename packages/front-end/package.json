@@ -12,8 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "graphql": "^16.6.0",
-    "graphql-request": "^6.0.0",
-    "http-server": "^14.1.1"
+    "graphql-request": "^6.0.0"
   },
   "devDependencies": {
     "html-webpack-plugin": "^5.5.1",
