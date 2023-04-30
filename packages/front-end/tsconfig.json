@@ -1,14 +1,10 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "module": "commonjs",
-      "lib": ["esnext"],
-      "sourceMap": true,
-      "outDir": "public/dist",
-      "strict": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true
-    },
-    "include": ["src/**/*"]
-  }
-  
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "ES5",
+    "module": "ES6",
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
