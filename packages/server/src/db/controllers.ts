@@ -1,10 +1,14 @@
 
 import { getDbInstance } from ".";
-import { Company } from "./models";
+import { Company, Station } from "./models";
 const dbInstance = getDbInstance();
 
 async function getAllCompanies() {
     return await Company.findAll();
+}
+
+async function getAllStations() {
+    return await Station.findAll();
 }
 
 
@@ -23,4 +27,5 @@ async function getAllCompaniesAndRef() {
 export default {
     getAllCompanies,
     getAllCompaniesAndRef,
+    getAllStations,
 };

@@ -1,14 +1,15 @@
 import {
-  GraphQLSchema, 
+  GraphQLSchema,
   GraphQLList,
   GraphQLID,
-  GraphQLObjectType, 
+  GraphQLInt,
+  GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
 
 import CompanyController from './db/controllers';
 
-const { getAllCompanies } = CompanyController;
+const { getAllCompanies, getAllStations } = CompanyController;
 
 const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
   name: "Company",
@@ -26,6 +27,35 @@ const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
   }),
 });
 
+
+const StationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
+  name: "Station",
+  description: "charghing EV station",
+  fields: () => ({
+    id: {
+      type: GraphQLID,
+    },
+    name: {
+      type: GraphQLString,
+    },
+    company_id: {
+      type: GraphQLID,
+    },
+    latitude: {
+      type: GraphQLInt,
+    },
+    longitude: {
+      type: GraphQLInt,
+    },
+    address: {
+      type: GraphQLString,
+    },
+    coord_key: {
+      type: GraphQLString,
+    },
+  }),
+});
+
 const RootType = new GraphQLObjectType({
   name: 'evRoot',
   description: 'ev graph',
@@ -35,6 +65,17 @@ const RootType = new GraphQLObjectType({
       resolve: async () => {
         try {
           return (await getAllCompanies());
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      }
+    },
+    stations: {
+      type: new GraphQLList(StationType),
+      resolve: async () => {
+        try {
+          return (await getAllStations());
         } catch (error) {
           console.error(error);
           return [];
