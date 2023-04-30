@@ -10,14 +10,15 @@ const handler = createHandler({ schema });
 
 // seed db: to be done separately:
 
-// (async()=> {
-//   await seedDb();
-// })();
+(async()=> {
+  await seedDb();
+})();
 
 const server = http.createServer( async (req, res) => {
     if (req && req.url && req.url === '/test') {
+ 
       await controllers.getAllCompaniesAndRef();
-      res.writeHead(200).end('ok')
+      res.writeHead(200).end('ok');
     }
     if (req && req.url?.startsWith('/graphql')) {
         handler(req, res);

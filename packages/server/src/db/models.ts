@@ -17,9 +17,15 @@ export const Company = sequelize.define('Company', {
     parent_company_id: {
         type: DataTypes.UUID,
     },
+    tree: {
+        type: DataTypes.JSON,
+    }
+
 },{
     freezeTableName: true,
-})
+});
+
+ 
 
 
 export const Station  = sequelize.define('Station', {
@@ -45,6 +51,10 @@ export const Station  = sequelize.define('Station', {
         allowNull: false,
     },
     address: {
+        type: DataTypes.CHAR(100),
+        allowNull: false,
+    },
+    coord_key: {
         type: DataTypes.CHAR(100),
         allowNull: false,
     },
