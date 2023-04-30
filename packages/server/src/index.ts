@@ -12,17 +12,25 @@ const handler = createHandler({ schema });
  
 const server = http.createServer( async (req, res) => {
   
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-    res.setHeader('Access-Control-Max-Age', 2592000); 
-
-    if (req && req.url && req.url === '/test') {
+  
+  if (req && req.url && req.url === '/test') {
+    
  
-      await controllers.getAllCompaniesAndRef();
-      res.writeHead(200).end('ok');
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+      res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+      res.setHeader('Access-Control-Max-Age', 2592000); 
+      res.end('ok');
+      return;
     }
     if (req && req.url?.startsWith('/graphql')) {
-        handler(req, res);
+ 
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+      res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
+      res.setHeader('Access-Control-Max-Age', 2592000); 
+      res.setHeader('Access-Control-Allow-Headers', req.headers.origin || '');
+      res.setHeader('Access-Control-Allow-Credentials', 'true'); 
+      
+      handler(req, res);
       } else {
         res.writeHead(404).end();
       }
