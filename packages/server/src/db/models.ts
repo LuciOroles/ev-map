@@ -25,9 +25,6 @@ export const Company = sequelize.define('Company', {
     freezeTableName: true,
 });
 
- 
-
-
 export const Station  = sequelize.define('Station', {
     id: {
         type: DataTypes.UUID,
@@ -60,4 +57,4 @@ export const Station  = sequelize.define('Station', {
     },
 }, {
     freezeTableName: true,
-})
+});

@@ -1,18 +1,50 @@
-import { Company, Station } from "./models";
+import {  Station } from "./models";
 import { randomUUID } from "crypto";
 import { seedCompaines } from './seed/companies'
-import { generateLocation } from "./seed/utils";
+import { generateAllLocation, pickRandomIndex } from "./seed/utils";
 
 async function seedStations() {
     const companies = await seedCompaines();
-   let index = 0;
-   let max = 12;
- 
-    // await Station.sync({ force: true });
+    await Station.sync({ force: true });
+    const companiesLen = companies.length;
+   
+    const { grouped, notGrouped } =  generateAllLocation(3,9);
 
+    for (const location of grouped) {
+        
+        for (const idx of [1,2,3]) {
+            const company = companies[pickRandomIndex(companiesLen)];
+            const station = Station.build({
+                id: randomUUID(),
+                name: `${company.name}-${idx}`,
+                company_id: company.id,
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                address: location.address,
+                coord_key:`${location.coords.latitude}_${location.coords.longitude}`
+            });
+            await station.save();
+        }
+    }
+
+    let idx= 1;
+    for (const location of notGrouped) {
+        const company = companies[pickRandomIndex(companiesLen)];
+        const station = Station.build({
+            id: randomUUID(),
+            name: `${company.name}-${idx}`,
+            company_id: company.id,
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            address: location.address,
+            coord_key:`${location.coords.latitude}_${location.coords.longitude}`
+        });
+        await station.save();
+        idx++;
+    }
  
 }
 
 export async function seedDb() {
-    await seedCompaines();
+    await seedStations();
 }

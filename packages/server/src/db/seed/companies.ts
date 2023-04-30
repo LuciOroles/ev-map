@@ -84,7 +84,7 @@ export async function seedCompaines() {
 
 
     return [ companyA, companyA1, companyC, companyC1, companyC1, companyC1_1].map((co) => ({
-        name: co.get('name'),
-        id: co.get('id')
+        name: co.get('name') as string,
+        id: co.get('id') as string
     }));
 }
