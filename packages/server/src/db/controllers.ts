@@ -7,8 +7,13 @@ async function getAllCompanies() {
     return await Company.findAll();
 }
 
-async function getAllStations() {
-    return await Station.findAll();
+async function getStationsByAddress(address: string) {
+    if (typeof address !== 'string') throw Error("Invalid address "+ address)
+    return await Station.findAll({
+        where: {
+            address,
+        }
+    });
 }
 
 async function getAllLocations() {
@@ -41,6 +46,6 @@ async function getAllCompaniesAndRef() {
 export default {
     getAllCompanies,
     getAllCompaniesAndRef,
-    getAllStations,
+    getStationsByAddress,
     getAllLocations,
 };

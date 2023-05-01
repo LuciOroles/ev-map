@@ -9,7 +9,7 @@ import {
 
 import CompanyController from './db/controllers';
 
-const { getAllCompanies, getAllStations, getAllLocations } = CompanyController;
+const { getAllCompanies, getStationsByAddress, getAllLocations } = CompanyController;
 
 
 const LocationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
@@ -90,9 +90,15 @@ const RootType = new GraphQLObjectType({
     },
     stations: {
       type: new GraphQLList(StationType),
-      resolve: async () => {
+      args: {
+        address: {
+          type: GraphQLString,
+        }
+      },
+      resolve: async ( _, args) => {
         try {
-          return (await getAllStations());
+          console.log(args);
+          return (await getStationsByAddress(args['address']));
         } catch (error) {
           console.error(error);
           return [];
