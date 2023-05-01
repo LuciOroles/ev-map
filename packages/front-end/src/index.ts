@@ -1,5 +1,6 @@
 
-import { GraphQLClient, gql } from 'graphql-request'
+import  "./style/style.css";
+import { GraphQLClient } from 'graphql-request'
 import { allStations, allCompanies } from './queries';
 
 async function getStation() {
