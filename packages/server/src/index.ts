@@ -1,41 +1,19 @@
-import http from 'http';
+import express from 'express'; 
+import { createHandler } from 'graphql-http/lib/use/express';
+ 
 import constants from './constants';
-import { createHandler } from 'graphql-http/lib/use/http';
 import schema from './schema';
+import cors from "cors";
  
 
 import controllers from './db/controllers';
 
 const { PORT } = constants;
-const handler = createHandler({ schema });
+ 
 
- 
-const server = http.createServer( async (req, res) => {
-  
-  
-  if (req && req.url && req.url === '/test') {
-    
- 
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-      res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-      res.setHeader('Access-Control-Max-Age', 2592000); 
-      res.end('ok');
-      return;
-    }
-    if (req && req.url?.startsWith('/graphql')) {
- 
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-      res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
-      res.setHeader('Access-Control-Max-Age', 2592000); 
-      res.setHeader('Access-Control-Allow-Headers', req.headers.origin || '');
-      res.setHeader('Access-Control-Allow-Credentials', 'true'); 
-      
-      handler(req, res);
-      } else {
-        res.writeHead(404).end();
-      }
-});
+const app = express();
+app.all('/graphql', cors(), createHandler({ schema }));
 
-server.listen(PORT, () => {
-    console.log(`server is up at ${PORT}`);
+app.listen({ port: PORT }, () => {
+  console.log(`Listening to port ${PORT}`);
 });
