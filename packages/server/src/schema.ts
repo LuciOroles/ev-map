@@ -9,7 +9,24 @@ import {
 
 import CompanyController from './db/controllers';
 
-const { getAllCompanies, getAllStations } = CompanyController;
+const { getAllCompanies, getAllStations, getAllLocations } = CompanyController;
+
+
+const LocationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
+  name: "Location",
+  description: "EV location, with one or many charges",
+  fields: () => ({
+    address: {
+      type: GraphQLString,
+    },
+    latitude: {
+      type: GraphQLInt,
+    },
+    longitude: {
+      type: GraphQLInt,
+    }
+  }),
+});
 
 const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
   name: "Company",
@@ -76,6 +93,17 @@ const RootType = new GraphQLObjectType({
       resolve: async () => {
         try {
           return (await getAllStations());
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      }
+    },
+    locations: {
+      type: new GraphQLList(LocationType),
+      resolve: async () => {
+        try {
+          return (await getAllLocations());
         } catch (error) {
           console.error(error);
           return [];

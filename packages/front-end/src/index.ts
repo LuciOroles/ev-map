@@ -1,21 +1,20 @@
 
 import  "./style/style.css";
 import { GraphQLClient } from 'graphql-request'
-import { allStations, allCompanies } from './queries';
-import { addContainer } from "./map";
+import { allStations, allCompanies, allLocations } from './queries';
+import { renderMap } from "./map";
 
+ 
 
-let stations: any[];
-
-async function getStation() {
+async function getLocations() {
   try {
     const graphQLClient = new GraphQLClient('http://localhost:8000/graphql', {
       mode: 'cors',
     });
-    const data = await graphQLClient.request(allStations);
+    const data = await graphQLClient.request(allLocations);
     console.log(data, ' data')
  
-    addContainer( (data as Record<string, any>)['stations']);
+    renderMap( (data as Record<string, any>)['locations']);
   } catch (error) {
     console.log(error)
   }
@@ -38,5 +37,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const comp = document.getElementById('getCompanies');
   comp.addEventListener('click', getCompanies);
   const stGetter = document.getElementById('getStations');
-  stGetter.addEventListener('click', getStation);
+  stGetter.addEventListener('click', getLocations);
 });

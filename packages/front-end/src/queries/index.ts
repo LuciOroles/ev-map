@@ -19,3 +19,12 @@ export const allCompanies = gql`{
    parent {id}
   }
 }`;
+
+export const allLocations = gql`
+{
+	locations {
+	 address
+	 latitude
+	 longitude
+	}
+}`;

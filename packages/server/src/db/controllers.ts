@@ -11,9 +11,23 @@ async function getAllStations() {
     return await Station.findAll();
 }
 
+async function getAllLocations() {
+    return (await Station.findAll({
+        group: 'address',
+    })).map((val) => {
+        const { dataValues } = val;
+
+        return {
+            latitude: dataValues.latitude,
+            longitude: dataValues.longitude,
+            address: dataValues.address
+        }
+    });;
+}
+
 
 async function getAllCompaniesAndRef() {
-    const [ results, metadata ] = await  dbInstance.query(`
+    const [results, metadata] = await dbInstance.query(`
     select  id, name,  parent_company_id as pid ,  parent_company_id as pname  from Company where parent_company_id is null  
     union  
     select  e.id,  e.name, m.id,  m.name  from Company m INNER  JOIN Company e ON m.id = e.parent_company_id;`);
@@ -28,4 +42,5 @@ export default {
     getAllCompanies,
     getAllCompaniesAndRef,
     getAllStations,
+    getAllLocations,
 };
