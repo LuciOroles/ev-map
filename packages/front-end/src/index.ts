@@ -2,6 +2,10 @@
 import  "./style/style.css";
 import { GraphQLClient } from 'graphql-request'
 import { allStations, allCompanies } from './queries';
+import { addContainer } from "./map";
+
+
+let stations: any[];
 
 async function getStation() {
   try {
@@ -10,6 +14,8 @@ async function getStation() {
     });
     const data = await graphQLClient.request(allStations);
     console.log(data, ' data')
+ 
+    addContainer( (data as Record<string, any>)['stations']);
   } catch (error) {
     console.log(error)
   }
@@ -31,7 +37,6 @@ async function getCompanies() {
 document.addEventListener("DOMContentLoaded", () => {
   const comp = document.getElementById('getCompanies');
   comp.addEventListener('click', getCompanies);
-
   const stGetter = document.getElementById('getStations');
   stGetter.addEventListener('click', getStation);
 });

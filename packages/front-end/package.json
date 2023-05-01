@@ -15,8 +15,9 @@
     "graphql-request": "^6.0.0"
   },
   "devDependencies": {
-    "html-webpack-plugin": "^5.5.1",
+    "@types/d3": "^7.4.0",
     "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.1",
     "style-loader": "^3.3.2",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4",
