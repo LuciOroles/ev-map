@@ -1,7 +1,7 @@
 
 import  "./style/style.css";
 import { GraphQLClient } from 'graphql-request'
-import { allStations, allCompanies, allLocations } from './queries';
+import { getStation, allCompanies, allLocations } from './queries';
 import { renderMap } from "./map";
 
  
@@ -20,6 +20,7 @@ async function getLocations() {
   }
 
 }
+
 
 async function getCompanies() {
   try {

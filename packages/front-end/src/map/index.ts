@@ -1,4 +1,6 @@
 import * as d3 from 'd3';
+import { getStationsByAddress } from '../api';
+ 
 
 
 interface Station {
@@ -26,13 +28,16 @@ export function renderMap(locations: Location[]) {
     .attr('height', '850px');
 
     for (const station of locations) {
-        container
+      const circle =  container
           .append('circle')
           .attr('cx', station.latitude)
           .attr('cy', station.longitude)
           .attr('r', 12)
           .attr('fill',  'yellow')
           .attr('class', 'y-circle');
+          circle.on('click', async () => {
+            await getStationsByAddress(station.address);
+          })
         container.append('text')
         .attr('x', station.latitude - 34 )
         .attr('y', station.longitude < 50 ? station.longitude + 20 : station.longitude -20 )

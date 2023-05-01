@@ -28,3 +28,16 @@ export const allLocations = gql`
 	 longitude
 	}
 }`;
+
+export const getStation = gql`
+query ($address: String) {
+	stations(address: $address) {
+		id
+		name
+		company_id
+		latitude
+		longitude
+		address
+		coord_key
+	}
+}`;
