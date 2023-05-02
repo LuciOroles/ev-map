@@ -5,7 +5,6 @@ import constants from './constants';
 import schema from './schema';
 import cors from "cors";
 
-import controllers from './db/controllers';
 
 const { PORT } = constants;
 

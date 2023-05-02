@@ -20,6 +20,13 @@ body{
     cursor: pointer;
 }
 
+.address-details>.close-btn {
+ 
+    position: absolute;
+    right: 8px;
+    top: 7px;
+}
+
 .y-circle:hover {
     cursor: pointer;
 }

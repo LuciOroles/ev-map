@@ -43,9 +43,9 @@ async function getAllCompaniesAndRef() {
     return results;
 }
 
-async function getDistanceFromPoint() {
+async function getDistanceFromPoint(cx: number, cy: number, radius: number) {
     const [results] = await dbInstance.query(`
-    SELECT  sqrt(pow(latitude,2) +  pow(longitude,2)) as distance, address, latitude, longitude `);
+    SELECT  sqrt(pow(latitude -${cx} ,2)   +  pow(longitude - ${cy},2)) as distance, address from Station where distance<=${radius} order by distance `);
 
     return results;
 }
