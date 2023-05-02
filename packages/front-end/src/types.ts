@@ -14,3 +14,11 @@ export interface Location {
     longitude: number;
     address: string;
 }
+
+export interface Origin {
+    ref: null | d3.Selection<SVGCircleElement, unknown, HTMLElement, any>
+}
+
+export interface MapContainer {
+    ref: null | d3.Selection<SVGElement, unknown, HTMLElement, any>
+}
