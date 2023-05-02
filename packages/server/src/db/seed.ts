@@ -47,4 +47,5 @@ async function seedStations() {
 
 export async function seedDb() {
     await seedStations();
+    console.log(`seed finished!`)
 }

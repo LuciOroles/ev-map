@@ -1,7 +1,7 @@
 
-import { getDbInstance } from ".";
+import { dbInstance } from ".";
 import { Company, Station } from "./models";
-const dbInstance = getDbInstance();
+ 
 
 async function getAllCompanies() {
     return await Company.findAll();
@@ -43,9 +43,17 @@ async function getAllCompaniesAndRef() {
     return results;
 }
 
+async function getDistanceFromPoint() {
+    const [results] = await dbInstance.query(`
+    SELECT  sqrt(pow(latitude,2) +  pow(longitude,2)) as distance, address, latitude, longitude `);
+
+    return results;
+}
+
 export default {
     getAllCompanies,
     getAllCompaniesAndRef,
     getStationsByAddress,
     getAllLocations,
+    getDistanceFromPoint
 };

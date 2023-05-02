@@ -25,4 +25,6 @@ export const getDbInstance = (() => {
 })();
 
 
+export const dbInstance = getDbInstance();
+
  

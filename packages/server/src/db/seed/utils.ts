@@ -2,12 +2,12 @@ function genCoord(margin: number) {
     return Math.floor(Math.random() * margin);
 }
 
-const locationFormater = (group: boolean, address: string) => ({
+const locationFormatter = (group: boolean, address: string) => ({
     address,
     group,
     coords: {
-        latitude: genCoord(800),
-        longitude: genCoord(800)
+        latitude: genCoord(750)+10,
+        longitude: genCoord(750)+10
     }
 });
 
@@ -23,9 +23,10 @@ interface Location {
 export function generateLocation(): Location {
     const randInt = Math.floor(Math.random() * 100);
     if (randInt > 70) {
-        return locationFormater(false, `Address-${randInt}`);
+        const secondRand = Math.floor(Math.random()*9999).toString(16); // avoid naming overlap
+        return locationFormatter(false, `Address-${secondRand}`);
     } else {
-        return locationFormater(true,`Address-M${randInt}`)
+        return locationFormatter(true,`Address-M${randInt}`)
     }
 }
 
