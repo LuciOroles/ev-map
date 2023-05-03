@@ -69,7 +69,7 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
  function onSearch (
         origin: Origin, 
         radiusInput:  HTMLInputElement, 
-        companyId: HTMLSelectElement )  {
+        companyId: HTMLSelectElement)  {
     const resultsLog =  document.getElementById("results");
     return async function () {
         let company_id;
@@ -153,5 +153,3 @@ export function createSearchNotification(notify: HTMLElement, origin: Origin, co
     (notify.childNodes[1] as HTMLDivElement).innerHTML = "";
     notify.childNodes[1].appendChild(container);
 }
-
-

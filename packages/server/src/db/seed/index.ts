@@ -1,6 +1,7 @@
-import {seedDb} from '../seed'
+import { seedStations } from './stations';
 
 (async()=> {
-    
-    await seedDb();
+    console.log('db seed started');
+    await seedStations();
+    console.log('db seed done');
 })();

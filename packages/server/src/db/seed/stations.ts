@@ -1,10 +1,10 @@
 import {  Station } from "../models";
 import { randomUUID } from "crypto";
-import { seedCompaines } from './companies'
+import { seedCompanies } from './companies'
 import { generateAllLocation, pickRandomIndex } from "./utils";
 
-async function seedStations() {
-    const companies = await seedCompaines();
+export async function seedStations() {
+    const companies = await seedCompanies();
     await Station.sync({ force: true });
     const companiesLen = companies.length;
    
@@ -43,9 +43,4 @@ async function seedStations() {
         idx++;
     }
  
-}
-
-export async function seedDb() {
-    await seedStations();
-    console.log(`seed finished!`)
 }

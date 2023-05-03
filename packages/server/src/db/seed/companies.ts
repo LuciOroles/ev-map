@@ -1,7 +1,7 @@
 import { Company } from "../models";
 import { randomUUID } from "crypto";
 
-export async function seedCompaines() {
+export async function seedCompanies() {
     await Company.sync({ force: true });
 
     const companyA = Company.build({

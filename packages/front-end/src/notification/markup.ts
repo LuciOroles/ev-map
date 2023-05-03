@@ -27,7 +27,7 @@ export function displayProxyStations(proxyStations: ProxyStation[]) {
        
         for (const [address, stations] of Object.entries(groupedStations) ) {
             const addressLabel = document.createElement('div');
-            addressLabel.innerText = `@Address: ${address} > ${stations[0].distance}km`;
+            addressLabel.innerText = `${stations[0].distance}km to @Address: ${address} `;
             result.appendChild(addressLabel);
             const list = document.createElement('ul');
             for (const station of stations) {
