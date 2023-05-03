@@ -41,3 +41,16 @@ query ($address: String) {
 		coord_key
 	}
 }`;
+
+
+export const proxyStations = gql`
+query ($cx: Int, $cy: Int, $radius: Int, $company_id: ID) {
+	proxyStations(cx: $cx, cy: $cy, radius: $radius, company_id: $company_id) {
+		distance
+		station_id
+		station_name
+		company_id
+		company_name
+		address
+	}
+}`;

@@ -1,16 +1,18 @@
 
+import { getProxyStations } from "../api";
 import { Company, Origin } from "../types";
 
+const anyCompany = "___";
 
-export function companyListSelector (companyList: Company[]) {
+export function companyListSelector(companyList: Company[]) {
     const selector = document.createElement('select');
-    
+
     let option = document.createElement('option');
-    option.setAttribute("value", "___");
-    option.innerText = 'All';
+    option.setAttribute("value", anyCompany);
+    option.innerText = 'Any';
     selector.appendChild(option);
     for (const company of companyList) {
-         option = document.createElement('option');
+        option = document.createElement('option');
         option.setAttribute("value", company.id);
         option.innerText = company.name;
         selector.appendChild(option);
@@ -34,7 +36,7 @@ export const notificationCreator = function () {
 
     notifyElement.appendChild(closeBtn);
     notifyElement.appendChild(notifyBody);
-    
+
     return notifyElement;
 
 };
@@ -50,7 +52,7 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
     const btn = document.createElement('button');
     btn.setAttribute('type', 'button');
     btn.innerText = 'reset';
-    btn.addEventListener('click' , () => { 
+    btn.addEventListener('click', () => {
         resetOrigin(origin);
         notify.style.display = 'none';
     });
@@ -58,7 +60,8 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
     return btn;
 }
 
-export function createSearchNotification(notify: HTMLElement, origin: Origin, companies: Company []) {
+export function createSearchNotification(notify: HTMLElement, origin: Origin, companies: Company[]) {
+    const companySelect = companyListSelector(companies)
     const nrInput = document.createElement('input');
     nrInput.setAttribute('type', 'number');
     nrInput.classList.add('radius');
@@ -66,27 +69,61 @@ export function createSearchNotification(notify: HTMLElement, origin: Origin, co
     nrInput.setAttribute('min', "10");
 
     const label = document.createElement('div');
-    label.innerText="Search Range";
-    const btn = document.createElement('button');
-    btn.setAttribute('type', 'button');
-    btn.innerText="search";
+    label.innerText = "Search Range";
+    const proxySearch = document.createElement('button');
+    proxySearch.setAttribute('type', 'button');
+    proxySearch.innerText = "search";
+    proxySearch.addEventListener('click', async () => {
+        let company_id;
+        let radius;
+        if (companySelect.value == anyCompany) {
+            company_id = null;
+        } else {
+            company_id = companySelect.value;
+        }
+        debugger;
+        if (typeof nrInput.value === 'string') {
+            let _temp = Number.parseInt(nrInput.value);
+            if (_temp < 800 && _temp > 0) {
+                radius =_temp;
+            }
+        }
+        if (radius && company_id !== undefined) {
+            const results = await getProxyStations({
+                cx: origin.coords.cx,
+                cy: origin.coords.cy,
+                radius,
+                company_id
+            });
 
-    
+        } else {
+            let invalidMessage = ""
+            if (!radius) {
+                invalidMessage = "Invalid radius!\n";
+            }
+            if (company_id === undefined) {
+                invalidMessage += "Invalid company!\n"
+            }
+            alert(invalidMessage);
+        }
+
+    });
+
+
     const container = document.createElement('div');
     container.appendChild(label);
     container.appendChild(nrInput);
-    container.appendChild(companyListSelector(companies));
+    container.appendChild(companySelect);
     const footer = document.createElement('div');
+    footer.classList.add('action-bar')
+    footer.appendChild(proxySearch);
 
-    footer.appendChild(btn);
-    
     footer.appendChild(createResetButton(notify, origin));
 
     container.appendChild(footer);
 
     (notify.childNodes[1] as HTMLDivElement).innerHTML = "";
-    notify.childNodes[1].appendChild(container);     
+    notify.childNodes[1].appendChild(container);
 }
 
 
- 

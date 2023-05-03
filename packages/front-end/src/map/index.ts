@@ -40,8 +40,8 @@ export function handleMap(
                 .attr('cx', newCoords.cx)
                 .attr('cy', newCoords.cy)
                 .attr('r', 8)
-
                 .attr('fill', '#0c48dd');
+                origin.coords = newCoords;
                 console.log(origin, 'origin');
             }
         });

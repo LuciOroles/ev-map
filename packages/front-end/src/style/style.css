@@ -41,9 +41,18 @@ body{
     border: none;
 }
 
-.address-details div, .address-details button {
-    font-size: 14px;
+.address-details .action-bar {
+    display: flex;
+    justify-content: space-around;
 }
+
+.address-details .action-bar button {
+    background: #4fa54f;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
 
 .y-circle:hover {
     cursor: pointer;

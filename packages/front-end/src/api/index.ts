@@ -1,10 +1,34 @@
 import { GraphQLClient } from 'graphql-request'
-import { getStation, allCompanies, allLocations } from '../queries';
+import { getStation, allCompanies, allLocations, proxyStations } from '../queries';
 import { Station, Location, Company } from '../types';
 
 const graphQLClient = new GraphQLClient('http://localhost:8000/graphql', {
     mode: 'cors',
 });
+
+interface ProxyStationInput {
+    cx: number;
+    cy: number;
+    radius: number;
+    company_id: string | null
+}
+
+export async function getProxyStations({cx, cy, radius, company_id}: ProxyStationInput): Promise<Station[]> {
+    try {
+        const data = await graphQLClient.request(proxyStations, {
+            cx,
+            cy,
+            radius,
+            company_id
+        }) as any;
+        return data['proxyStations'];
+    } catch (error) {
+        console.log(error);
+        alert("Error getting data!");
+    }
+}
+
+
 
 export async function getStationsByAddress(address: string): Promise<Station[]> {
     try {
