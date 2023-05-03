@@ -41,11 +41,40 @@ function resetOrigin(origin: Origin) {
 export function createResetButton(notify: HTMLElement, origin: Origin) {
     const btn = document.createElement('button');
     btn.setAttribute('type', 'button');
-    btn.innerText = 'Reset origin';
+    btn.innerText = 'reset';
     btn.addEventListener('click' , () => { 
         resetOrigin(origin);
         notify.style.display = 'none';
     });
 
     return btn;
+}
+
+export function createRadiusContainer(notify: HTMLElement, origin: Origin) {
+    const nrInput = document.createElement('input');
+    nrInput.setAttribute('type', 'number');
+    nrInput.classList.add('radius');
+    nrInput.setAttribute('max', "800");
+    nrInput.setAttribute('min', "10");
+
+    const label = document.createElement('div');
+    label.innerText="Search Range";
+    const btn = document.createElement('button');
+    btn.setAttribute('type', 'button');
+    btn.innerText="search";
+
+    
+    const container = document.createElement('div');
+    container.appendChild(label);
+    container.appendChild(nrInput)
+    const footer = document.createElement('div');
+
+    footer.appendChild(btn);
+    
+    footer.appendChild(createResetButton(notify, origin));
+
+    container.appendChild(footer);
+
+
+    return container;
 }

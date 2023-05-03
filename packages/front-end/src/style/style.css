@@ -11,7 +11,6 @@ body{
 
 .address-details {
     background: #eee;
-    width: 90px;
     padding: 1em;
     border-radius: 20%;
     font-size: 18px;
@@ -21,10 +20,24 @@ body{
 }
 
 .address-details>.close-btn {
- 
+
     position: absolute;
     right: 8px;
     top: 7px;
+}
+
+.address-details .radius {
+    width: 60px;
+    font-size: 24px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+ 
+    margin: 0.2em;
+}
+
+.address-details div, .address-details button {
+    font-size: 14px;
 }
 
 .y-circle:hover {

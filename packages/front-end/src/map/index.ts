@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { getStationsByAddress } from '../api';
 import { Location, Origin } from '../types'
-import { createResetButton, notificationCreator } from '../notification';
+import { createRadiusContainer, createResetButton, notificationCreator } from '../notification';
 
 const { changeCoords, changeBody } = notificationCreator();
 
@@ -20,8 +20,8 @@ export function handleMap(
                 if ((target as HTMLElement).getAttribute('fill') === '#0c48dd') {
                     const canvasCoords = document.querySelector("#canvas").getBoundingClientRect()
                     changeCoords(event.pageX - (canvasCoords.x) + 20, event.pageY - (canvasCoords.y +20))
-                    changeBody(createResetButton(notify, origin));
-               }
+                    changeBody(createRadiusContainer(notify, origin));
+                    }
                return;
             }
             const canvasCoords = document.querySelector("#canvas").getBoundingClientRect();
