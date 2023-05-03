@@ -14,6 +14,15 @@ export interface Station {
     coord_key: string;
 }
 
+export interface ProxyStation {
+    address: Station['address'];
+    company_id: Company['id'];
+    company_name: Company['name'];
+    distance: number;
+    station_id: Station['id'];
+    station_name: Station['name']
+}
+
 export interface Location {
     latitude: number;
     longitude: number;

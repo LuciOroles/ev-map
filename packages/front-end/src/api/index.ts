@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request'
 import { getStation, allCompanies, allLocations, proxyStations } from '../queries';
-import { Station, Location, Company } from '../types';
+import { Station, Location, Company, ProxyStation } from '../types';
 
 const graphQLClient = new GraphQLClient('http://localhost:8000/graphql', {
     mode: 'cors',
@@ -13,7 +13,7 @@ interface ProxyStationInput {
     company_id: string | null
 }
 
-export async function getProxyStations({cx, cy, radius, company_id}: ProxyStationInput): Promise<Station[]> {
+export async function getProxyStations({cx, cy, radius, company_id}: ProxyStationInput): Promise<ProxyStation[]> {
     try {
         const data = await graphQLClient.request(proxyStations, {
             cx,
