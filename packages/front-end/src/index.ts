@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getMemoLocations = (await locationsList())();
   const getMemoCompanies = (await companyList())();
 
-  let origin: Origin = {
+  const origin: Origin = {
     ref: null, 
     container: null,
     coords: {

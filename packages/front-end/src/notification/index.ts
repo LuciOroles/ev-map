@@ -1,6 +1,6 @@
 
 import { getProxyStations } from "../api";
-import { Company, Origin, ProxyStation } from "../types";
+import { Company, Origin } from "../types";
 import { displayProxyStations, drawLocationArea } from './markup';
 
 const anyCompany = "___";
@@ -23,15 +23,15 @@ export function companyListSelector(companyList: Company[]) {
 }
 
 export const notificationCreator = function () {
-    let notifyElement = document.createElement('div');
+    const notifyElement = document.createElement('div');
     notifyElement.style.position = "absolute";
     notifyElement.classList.add('address-details');
 
-    let notifyBody = document.createElement('div');
+    const notifyBody = document.createElement('div');
     const closeBtn = document.createElement('div');
     closeBtn.classList.add('close-btn')
     closeBtn.innerHTML = "&times;"
-    closeBtn.addEventListener('click', (e) => {
+    closeBtn.addEventListener('click', () => {
         notifyElement.style.display = 'none';
     });
 
@@ -81,7 +81,7 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
         }
      
  
-        let _temp = Number.parseInt(radiusInput.value);
+        const _temp = Number.parseInt(radiusInput.value);
         if (Number.isFinite(_temp) && _temp < 800 && _temp > 0) {
             radius =_temp;
         }

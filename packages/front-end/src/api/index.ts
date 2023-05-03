@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { GraphQLClient } from 'graphql-request'
 import { getStation, allCompanies, allLocations, proxyStations } from '../queries';
 import { Station, Location, Company, ProxyStation } from '../types';

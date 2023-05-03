@@ -1,6 +1,5 @@
 import { groupBy } from 'lodash';
 import { Origin, ProxyStation } from "../types";
-import * as d3 from 'd3';
 
 interface DrawOriginInput {
     cx: number,
