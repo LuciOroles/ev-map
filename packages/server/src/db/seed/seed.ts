@@ -1,7 +1,7 @@
-import {  Station } from "./models";
+import {  Station } from "../models";
 import { randomUUID } from "crypto";
-import { seedCompaines } from './seed/companies'
-import { generateAllLocation, pickRandomIndex } from "./seed/utils";
+import { seedCompaines } from './companies'
+import { generateAllLocation, pickRandomIndex } from "./utils";
 
 async function seedStations() {
     const companies = await seedCompaines();

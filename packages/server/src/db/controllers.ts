@@ -1,7 +1,6 @@
-/*eslint no-inner-declarations: 0*/
 import { dbInstance } from ".";
 import { Company, Station } from "./models";
-
+import { getDependantCompanyIds } from './util';
 
 async function getAllCompanies() {
     return await Company.findAll();
@@ -30,9 +29,10 @@ async function getAllLocations() {
     });
 }
 
- 
+
 async function getDistanceFromPoint(cx: number, cy: number, radius: number, company_id: string) {
     const companyIds: string[] = company_id ? [company_id] : [];
+
     if (company_id) {
 
         const targetCompany = await Company.findOne({
@@ -41,24 +41,9 @@ async function getDistanceFromPoint(cx: number, cy: number, radius: number, comp
             }
         });
         const dependantCompanies = JSON.parse(targetCompany?.get('tree') as string);
- 
-
-        const companyIds: string[] = [];
-        function iterate(input: Record<string, unknown>) {
-            const deps = input['dep'];
-            if (Array.isArray(deps) && deps.length) {
-                for (const dep of deps) {
-                    if (typeof dep['id'] === 'string') {
-                        companyIds.push(dep['id']);
-                        iterate(dep);
-                    }
-                }
-            } else {
-                return;
-            }
-        }
-
-        iterate(dependantCompanies);
+        getDependantCompanyIds(dependantCompanies).forEach(id => {
+            companyIds.push(id)
+        });
     }
 
     let companyFilter = ''
@@ -66,7 +51,6 @@ async function getDistanceFromPoint(cx: number, cy: number, radius: number, comp
         companyFilter = `and
         company_id in (${companyIds.map((v) => JSON.stringify(v)).join(',')})`
     }
-
 
     const [results] = await dbInstance.query(`
         SELECT  
@@ -87,8 +71,6 @@ async function getDistanceFromPoint(cx: number, cy: number, radius: number, comp
             order by distance
             `);
 
-
-    // group by location
     return results;
 
 }
