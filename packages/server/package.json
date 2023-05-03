@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest src/test/*.test.ts",
     "develop": "ts-node src/index.ts",
-    "seed": "ts-node src/db/seed/index.ts"
+    "seed": "ts-node src/db/seed/index.ts",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
