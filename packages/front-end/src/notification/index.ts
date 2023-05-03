@@ -1,6 +1,7 @@
 
 import { getProxyStations } from "../api";
 import { Company, Origin, ProxyStation } from "../types";
+import { displayProxyStations } from './markup';
 
 const anyCompany = "___";
 
@@ -91,9 +92,10 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
 
                 const proxyResult = displayProxyStations(proxyStations);
                 const startEntry = document.createElement('div');
-                startEntry.innerText = `Start: x: ${ origin.coords.cx}, y: ${origin.coords.cy} | ${companyId.selectedOptions[0].text}`
+                startEntry.innerText = `Start: x: ${ origin.coords.cx}, y: ${origin.coords.cy} | R: ${radius} | ${companyId.selectedOptions[0].text}`
                 resultsLog.appendChild(startEntry);
                 resultsLog.appendChild(proxyResult);
+                
             } catch (error) {
                 alert("Issue getting data!")
             }
@@ -143,20 +145,3 @@ export function createSearchNotification(notify: HTMLElement, origin: Origin, co
 }
 
 
-function displayProxyStations(proxyStations: ProxyStation[]) {
-
-    const result = document.createElement('div');
-
-    if (proxyStations.length === 0) {
-        result.innerText = 'No station matching criteria'
-    } else {
-        const list = document.createElement('ul');
-        for (const station of proxyStations) {
-            const li = document.createElement('li');
-            li.innerText = `@${station.distance}km| ${station.station_name} of ${station.company_name}`;
-            list.appendChild(li);
-        }
-        result.append(list);
-    }
-    return result;
-}

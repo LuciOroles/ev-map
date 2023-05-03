@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { getStationsByAddress } from '../api';
 import { Company, Location, Origin } from '../types'
-import { createSearchNotification, notificationCreator } from '../notification';
+import { createSearchNotification } from '../notification';
 
 
 
@@ -42,7 +42,7 @@ export function handleMap(
                 .attr('r', 8)
                 .attr('fill', '#0c48dd');
                 origin.coords = newCoords;
-                console.log(origin, 'origin');
+                
             }
         });
 
