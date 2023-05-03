@@ -44,7 +44,7 @@ async function getAllCompaniesAndRef() {
 }
 
 async function getDistanceFromPoint(cx: number, cy: number, radius: number, company_id: string) {
-    const companyIds: string[] = [company_id]
+    const companyIds: string[] = company_id ? [company_id] : [];
     if (company_id) {
 
         const targetCompany = await Company.findOne({

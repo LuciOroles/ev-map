@@ -2,7 +2,7 @@ import express from 'express';
 import { createHandler } from 'graphql-http/lib/use/express';
  
 import constants from './constants';
-import schema from './schema';
+import schema from './graphql/schema';
 import cors from "cors";
 
 
