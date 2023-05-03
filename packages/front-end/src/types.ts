@@ -1,8 +1,13 @@
-// TOD0: type file
+ 
+export interface Company {
+    id: string;
+    name: string;
+}
+
 export interface Station {
     id: string;
     name: string;
-    company_id: string;
+    company_id: Company['id'];
     latitude: number;
     longitude: number;
     address: string;

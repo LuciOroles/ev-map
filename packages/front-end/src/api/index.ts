@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request'
 import { getStation, allCompanies, allLocations } from '../queries';
-import { Station } from '../types';
+import { Station, Location, Company } from '../types';
 
 const graphQLClient = new GraphQLClient('http://localhost:8000/graphql', {
     mode: 'cors',
@@ -11,7 +11,6 @@ export async function getStationsByAddress(address: string): Promise<Station[]> 
         const data = await graphQLClient.request(getStation, {
             address,
         }) as any;
-        console.log(data, ' data')
         return data['stations'];
     } catch (error) {
         console.log(error);
@@ -19,22 +18,38 @@ export async function getStationsByAddress(address: string): Promise<Station[]> 
     }
 }
 
-export async function getLocations(): Promise<{ 'locations': Location[] }> {
+ async function getLocations(): Promise<Location[]> {
     try {
-        const data = await graphQLClient.request(allLocations);
+        const data = await graphQLClient.request(allLocations) as any;
         console.log(data, ' data')
-        return data as any;
+        return data['locations']; 
     } catch (error) {
         console.log(error)
     }
 }
 
 
-export async function getCompanies() {
+ async function getCompanies(): Promise<Company[]> {
     try {
-        const data = await graphQLClient.request(allCompanies)
-        console.log(data, ' data')
+        const data = await graphQLClient.request(allCompanies) as any;
+         return data['companies'];
     } catch (error) {
         console.error(error)
     }
 }
+
+export const locationsList = async function () {
+    const locations = await getLocations();
+    return ():Location[] => {
+        return locations;
+    }
+};
+
+export const companyList = async function () {
+    const companies = await getCompanies();
+
+    return (): Company[] => {
+      return companies;
+     }
+};
+

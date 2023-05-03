@@ -17,6 +17,7 @@ body{
     display: none;
     box-shadow: 2px 4px 5px #c7bebe;
     cursor: pointer;
+    min-width: 90px;
 }
 
 .address-details>.close-btn {
@@ -34,6 +35,10 @@ body{
     border: none;
  
     margin: 0.2em;
+}
+.address-details select {
+    font-size: 24px;
+    border: none;
 }
 
 .address-details div, .address-details button {

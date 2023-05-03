@@ -1,16 +1,16 @@
 import * as d3 from 'd3';
 import { getStationsByAddress } from '../api';
-import { Location, Origin } from '../types'
-import { createRadiusContainer, createResetButton, notificationCreator } from '../notification';
+import { Company, Location, Origin } from '../types'
+import { createSearchNotification, notificationCreator } from '../notification';
 
-const { changeCoords, changeBody } = notificationCreator();
 
 
 export function handleMap(
     notify: HTMLDivElement, 
     origin: Origin ) {
-
-    return function renderMap(locations: Location[]) {
+        
+        return function renderMap(locations: Location[], companies: Company[]) {
+       
         const  container = d3.select('#canvas').append('svg')
             .attr('width', '800px')
             .attr('height', '800px');
@@ -19,8 +19,11 @@ export function handleMap(
             if ((target as HTMLElement)['tagName'] === 'circle') {
                 if ((target as HTMLElement).getAttribute('fill') === '#0c48dd') {
                     const canvasCoords = document.querySelector("#canvas").getBoundingClientRect()
-                    changeCoords(event.pageX - (canvasCoords.x) + 20, event.pageY - (canvasCoords.y +20))
-                    changeBody(createRadiusContainer(notify, origin));
+                    notify.style.left = `${event.pageX - (canvasCoords.x) + 20}px`;
+                    notify.style.top = `${event.pageY - (canvasCoords.y +20)}px`;
+                    notify.style.display = 'block';
+
+                    createSearchNotification(notify, origin, companies);
                     }
                return;
             }

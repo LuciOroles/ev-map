@@ -1,6 +1,25 @@
-import { Origin } from "../types";
 
-export const notificationCreator = (function () {
+import { Company, Origin } from "../types";
+
+
+export function companyListSelector (companyList: Company[]) {
+    const selector = document.createElement('select');
+    
+    let option = document.createElement('option');
+    option.setAttribute("value", "___");
+    option.innerText = 'All';
+    selector.appendChild(option);
+    for (const company of companyList) {
+         option = document.createElement('option');
+        option.setAttribute("value", company.id);
+        option.innerText = company.name;
+        selector.appendChild(option);
+    }
+
+    return selector;
+}
+
+export const notificationCreator = function () {
     let notifyElement = document.createElement('div');
     notifyElement.style.position = "absolute";
     notifyElement.classList.add('address-details');
@@ -15,21 +34,10 @@ export const notificationCreator = (function () {
 
     notifyElement.appendChild(closeBtn);
     notifyElement.appendChild(notifyBody);
+    
+    return notifyElement;
 
-
-    return () => ({
-        notifyElement,
-        changeBody: (node: HTMLElement) => {
-            notifyBody.innerHTML = '';
-            notifyBody.appendChild(node);
-        },
-        changeCoords: (left: number, top: number) => {
-            notifyElement.style.left = `${left}px`;
-            notifyElement.style.top = `${top}px`;
-            notifyElement.style.display = 'block';
-        }
-    });
-})();
+};
 
 function resetOrigin(origin: Origin) {
     if (origin.ref) {
@@ -50,7 +58,7 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
     return btn;
 }
 
-export function createRadiusContainer(notify: HTMLElement, origin: Origin) {
+export function createSearchNotification(notify: HTMLElement, origin: Origin, companies: Company []) {
     const nrInput = document.createElement('input');
     nrInput.setAttribute('type', 'number');
     nrInput.classList.add('radius');
@@ -66,7 +74,8 @@ export function createRadiusContainer(notify: HTMLElement, origin: Origin) {
     
     const container = document.createElement('div');
     container.appendChild(label);
-    container.appendChild(nrInput)
+    container.appendChild(nrInput);
+    container.appendChild(companyListSelector(companies));
     const footer = document.createElement('div');
 
     footer.appendChild(btn);
@@ -75,6 +84,9 @@ export function createRadiusContainer(notify: HTMLElement, origin: Origin) {
 
     container.appendChild(footer);
 
-
-    return container;
+    (notify.childNodes[1] as HTMLDivElement).innerHTML = "";
+    notify.childNodes[1].appendChild(container);     
 }
+
+
+ 
