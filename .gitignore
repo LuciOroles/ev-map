@@ -2,3 +2,4 @@ node_modules/
 notes.md
 database/*
 packages/front-end/public/dist
+packages/server/dist
