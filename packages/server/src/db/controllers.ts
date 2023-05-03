@@ -43,7 +43,7 @@ async function getAllCompaniesAndRef() {
     return results;
 }
 
-async function getDistanceFromPoint(cx: number, cy: number, radius: number) {
+async function getDistanceFromPoint(cx: number, cy: number, radius: number, companyIds: string[]) {
     const [results] = await dbInstance.query(`
     SELECT  
         floor(sqrt(pow(latitude - ${cx} ,2)   +  pow(longitude - ${cy},2))) as distance, 
@@ -51,7 +51,12 @@ async function getDistanceFromPoint(cx: number, cy: number, radius: number) {
         address,
         company_id,
         name
-        from Station where distance<=${radius} order by distance 
+        from 
+        Station where 
+            distance<=${radius}
+                and
+            company_id in (${companyIds.map((v)=>JSON.stringify(v)).join(',')})
+        order by distance
         `);
 
 
