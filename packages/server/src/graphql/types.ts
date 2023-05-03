@@ -1,13 +1,12 @@
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import {
-
     GraphQLID,
     GraphQLInt,
     GraphQLObjectType,
     GraphQLString,
 } from 'graphql';
 
-export const LocationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
+export const LocationType = new GraphQLObjectType({
     name: "Location",
     description: "EV location, with one or many charges",
     fields: () => ({
@@ -23,7 +22,7 @@ export const LocationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
     }),
 });
 
-export const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
+export const CompanyType: GraphQLObjectType<any, any>  = new GraphQLObjectType({
     name: "Company",
     description: "EV organization",
     fields: () => ({
@@ -40,7 +39,7 @@ export const CompanyType: GraphQLObjectType<any, any> = new GraphQLObjectType({
 });
 
 
-export const StationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
+export const StationType  = new GraphQLObjectType({
     name: "Station",
     description: "charging EV station",
     fields: () => ({
@@ -68,7 +67,7 @@ export const StationType: GraphQLObjectType<any, any> = new GraphQLObjectType({
     }),
 });
 
-export const ProxyStation: GraphQLObjectType<any, any> = new GraphQLObjectType({
+export const ProxyStation  = new GraphQLObjectType({
     name: "ProxyStation",
     description: "Station on proximity",
     fields: () => ({

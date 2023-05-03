@@ -32,23 +32,23 @@ export function generateLocation(): Location {
 
 
 export function generateAllLocation(grouped: number, notGrouped: number) {
-    let achivedGrouped: Location[] = [];
-    let achivedNotGrouped: Location[] = [];
+    const achievedGrouped: Location[] = [];
+    const achievedNotGrouped: Location[] = [];
 
-    while (achivedGrouped.length < grouped || achivedNotGrouped.length < notGrouped) {
+    while (achievedGrouped.length < grouped || achievedNotGrouped.length < notGrouped) {
         const location = generateLocation();
 
-        if (location.group === true && achivedGrouped.length < grouped) {
-            achivedGrouped.push(location);
-        } else if (location.group === false && achivedNotGrouped.length < notGrouped) {
-            achivedNotGrouped.push(location);
+        if (location.group === true && achievedGrouped.length < grouped) {
+            achievedGrouped.push(location);
+        } else if (location.group === false && achievedNotGrouped.length < notGrouped) {
+            achievedNotGrouped.push(location);
         }
 
     }
 
     return {
-        grouped: achivedGrouped,
-        notGrouped: achivedNotGrouped
+        grouped: achievedGrouped,
+        notGrouped: achievedNotGrouped
     };
 }
 
