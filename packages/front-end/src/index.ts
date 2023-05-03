@@ -11,10 +11,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getMemoCompanies = (await companyList())();
 
   let origin: Origin = {
-    ref: null, coords: {
+    ref: null, 
+    container: null,
+    coords: {
       cx: -1,
       cy: -1,
-    }
+    },
+    areaRef: null,
   }
   const notifyElement = notificationCreator(); // dubious can be moved outside
 

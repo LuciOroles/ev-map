@@ -5,6 +5,7 @@ import { createSearchNotification } from '../notification';
 
 
 
+
 export function handleMap(
     notify: HTMLDivElement, 
     origin: Origin ) {
@@ -14,7 +15,10 @@ export function handleMap(
         const  container = d3.select('#canvas').append('svg')
             .attr('width', '800px')
             .attr('height', '800px');
-            container.on('click', (event: PointerEvent ) => {
+
+        origin.container = container;
+
+        container.on('click', (event: PointerEvent ) => {
             const {target} = event;
             if ((target as HTMLElement)['tagName'] === 'circle') {
                 if ((target as HTMLElement).getAttribute('fill') === '#0c48dd') {
@@ -46,6 +50,7 @@ export function handleMap(
             }
         });
 
+       
 
         let it = 1;
         while (it<8) {

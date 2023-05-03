@@ -1,7 +1,7 @@
 
 import { getProxyStations } from "../api";
 import { Company, Origin, ProxyStation } from "../types";
-import { displayProxyStations } from './markup';
+import { displayProxyStations, drawLocationArea } from './markup';
 
 const anyCompany = "___";
 
@@ -45,7 +45,9 @@ export const notificationCreator = function () {
 function resetOrigin(origin: Origin) {
     if (origin.ref) {
         origin.ref.remove();
+        origin.areaRef.remove();
         origin.ref = null;
+        origin.areaRef= null;
     }
 }
 
@@ -64,7 +66,10 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
 }
 
 
- function onSearch (origin: Origin, radiusInput:  HTMLInputElement, companyId: HTMLSelectElement )  {
+ function onSearch (
+        origin: Origin, 
+        radiusInput:  HTMLInputElement, 
+        companyId: HTMLSelectElement )  {
     const resultsLog =  document.getElementById("results");
     return async function () {
         let company_id;
@@ -95,7 +100,12 @@ export function createResetButton(notify: HTMLElement, origin: Origin) {
                 startEntry.innerText = `Start: x: ${ origin.coords.cx}, y: ${origin.coords.cy} | R: ${radius} | ${companyId.selectedOptions[0].text}`
                 resultsLog.appendChild(startEntry);
                 resultsLog.appendChild(proxyResult);
-                
+                drawLocationArea({
+                    cx: origin.coords.cx,
+                    cy: origin.coords.cy,
+                    radius,
+                    origin,
+                })
             } catch (error) {
                 alert("Issue getting data!")
             }

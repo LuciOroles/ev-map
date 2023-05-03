@@ -30,10 +30,13 @@ export interface Location {
 }
 
 export interface Origin {
+    container: null |  d3.Selection<SVGSVGElement, unknown, HTMLElement, any>,
     ref: null | d3.Selection<SVGCircleElement, unknown, HTMLElement, any>,
     coords: {
         cx: number,
         cy: number,
-    }
+    },
+    areaRef: null | d3.Selection<SVGCircleElement, unknown, HTMLElement, any>,
+
 }
  

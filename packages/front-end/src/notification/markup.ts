@@ -1,5 +1,21 @@
 import { groupBy } from 'lodash';
-import { ProxyStation } from "../types";
+import { Origin, ProxyStation } from "../types";
+import * as d3 from 'd3';
+
+interface DrawOriginInput {
+    cx: number,
+    cy: number,
+    radius: number,
+    origin: Origin,
+}
+
+
+export function drawLocationArea( {cx, cy, radius,  origin }: DrawOriginInput) {
+    if ( origin.areaRef)  {
+        origin.areaRef.remove();
+    }
+    origin.areaRef = origin.container.append('circle').attr('cx', cx).attr('cy', cy).attr('r', radius).attr('stroke', 'red').attr('fill', 'transparent');
+}
 
 export function displayProxyStations(proxyStations: ProxyStation[]) {
 
