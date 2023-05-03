@@ -1,14 +1,14 @@
 
 import { dbInstance } from ".";
 import { Company, Station } from "./models";
- 
+
 
 async function getAllCompanies() {
     return await Company.findAll();
 }
 
 async function getStationsByAddress(address: string) {
-    if (typeof address !== 'string') throw Error("Invalid address "+ address)
+    if (typeof address !== 'string') throw Error("Invalid address " + address)
     return await Station.findAll({
         where: {
             address,
@@ -43,25 +43,66 @@ async function getAllCompaniesAndRef() {
     return results;
 }
 
-async function getDistanceFromPoint(cx: number, cy: number, radius: number, companyIds: string[]) {
+async function getDistanceFromPoint(cx: number, cy: number, radius: number, company_id: string) {
+    const companyIds: string[] = [company_id]
+    if (company_id) {
+
+        const targetCompany = await Company.findOne({
+            where: {
+                id: company_id,
+            }
+        });
+        const dependantCompanies = JSON.parse(targetCompany?.get('tree') as string);
+        console.log(typeof dependantCompanies);
+
+        const companyIds: string[] = [];
+        function iterate(input: Record<string, any>) {
+            let deps = input['dep'];
+            if (Array.isArray(deps) && deps.length) {
+                for (let dep of deps) {
+                    if (typeof dep['id'] === 'string') {
+                        companyIds.push(dep['id']);
+                        iterate(dep);
+                    }
+                }
+            } else {
+                return;
+            }
+        }
+
+        iterate(dependantCompanies);
+    }
+
+    let companyFilter = ''
+    if (companyIds.length > 0) {
+        companyFilter = `and
+        company_id in (${companyIds.map((v) => JSON.stringify(v)).join(',')})`
+    }
+
+
     const [results] = await dbInstance.query(`
-    SELECT  
-        floor(sqrt(pow(latitude - ${cx} ,2)   +  pow(longitude - ${cy},2))) as distance, 
-        id,
-        address,
-        company_id,
-        name
-        from 
-        Station where 
-            distance<=${radius}
-                and
-            company_id in (${companyIds.map((v)=>JSON.stringify(v)).join(',')})
-        order by distance
-        `);
+        SELECT  
+            floor(sqrt(pow(latitude - ${cx} ,2)   +  pow(longitude - ${cy},2))) as distance, 
+            station.id as station_id,
+            station.name as station_name,
+            address,
+            company_id,
+            Company.name as company_name
+            from 
+            Station
+                JOIN 
+                Company 
+                ON Company.id = Station.company_id
+            where 
+                distance<=${radius}
+                ${companyFilter}        
+            order by distance
+            `);
 
 
-        // group by location
+    // group by location
     return results;
+
 }
 
 export default {
